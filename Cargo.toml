@@ -1,0 +1,15 @@
+[package]
+name = "phantom_decrypt"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+argon2 = "0.5"
+aes-gcm = "0.10"
+base64 = "0.21"
+flate2 = "1.0"
+walkdir = "2.4"
+rayon = "1.8"
+rpassword = "7.3"
+anyhow = "1.0"
+indicatif = "0.17"
