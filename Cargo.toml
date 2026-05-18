@@ -6,10 +6,20 @@ edition = "2024"
 [dependencies]
 argon2 = "0.5"
 aes-gcm = "0.10"
-base64 = "0.21"
+base64 = "0.22"
 flate2 = "1.0"
 walkdir = "2.4"
 rayon = "1.8"
 rpassword = "7.3"
 anyhow = "1.0"
-indicatif = "0.17"
+indicatif = "0.18"
+dashmap = "6.2"
+lazy_static = "1.5"
+
+[profile.release]
+lto = true
+opt-level = "z"
+codegen-units = 1
+panic = "abort"
+debug = false
+strip = true
