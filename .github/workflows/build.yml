@@ -122,27 +122,24 @@ jobs:
           path: ${{ env.ASSET_PATH }}
 
   release:
-    name: Create GitHub Release
+    name: Upload Release Assets
     if: github.event_name == 'release'
     needs: [build-with-cross, build-macos]
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Create download directory
-        run: mkdir downloads
-
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: downloads
           pattern: ${{ env.APP_NAME }}-*
+          merge-multiple: true
 
       - name: Upload assets to release
         shell: bash
-        run: |
-          for file in downloads/*/*; do
-            gh release upload "${{ github.event.release.tag_name }}" "$file"
-          done
         env:
+          GH_REPO: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ github.event.release.tag_name }}" downloads/* --clobber
